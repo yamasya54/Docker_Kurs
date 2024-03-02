@@ -12,7 +12,13 @@ services:
       - webnet
 
    websrv:
-     build: .
+     image: ozgurozturknet/webkayit
+     deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
      depends_on:
        - mysqldb
      ports:
@@ -25,6 +31,7 @@ services:
        DB_USERNAME: projemaster
        DB_PASS: master1234
        DB_NAME: proje
+
 networks:
   webnet:
-    driver: bridge
+    driver: overlay
